@@ -35,12 +35,16 @@ class ProjectsController < ApplicationController
     @project.image = params[:project][:image]
     @categories = params[:project][:categories]
     Categorization.all.where(project_id: @project.id).destroy_all
+    @project.looking_for = params[:project][:looking_for].split(',')
 
-    @categories.each do |category|
-      categorization = Categorization.new
-      categorization.project = @project
-      categorization.category_id = category
-      categorization.save
+
+    if @categories != nil
+      @categories.each do |category|
+        categorization = Categorization.new
+        categorization.project = @project
+        categorization.category_id = category
+        categorization.save
+      end
     end
 
     if @project.save
@@ -52,12 +56,12 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    puts params
     @project = Project.new
     @project.name = params[:project][:name]
     @project.description = params[:project][:description]
     @project.image = params[:project][:image]
     @categories = params[:project][:categories]
+    @project.looking_for = params[:project][:looking_for].split(',')
 
     @member = Member.new
     @member.user = current_user
@@ -65,11 +69,13 @@ class ProjectsController < ApplicationController
     @member.owner = true
     @member.project = @project
 
-    @categories.each do |category|
-      categorization = Categorization.new
-      categorization.project = @project
-      categorization.category_id = category
-      categorization.save
+    if @categories != nil
+      @categories.each do |category|
+        categorization = Categorization.new
+        categorization.project = @project
+        categorization.category_id = category
+        categorization.save
+      end
     end
 
     if @project.save && @member.save
@@ -88,7 +94,33 @@ class ProjectsController < ApplicationController
 
   def applicants
     @project = Project.find(params[:project_id])
-    @applicants = Member.all.where(project_id: @project.id)
+    @applicants = Member.all.where(project_id: @project.id).where(approved: false)
+  end
+
+  def create_applicant
+    @project = Project.find(params[:project_id])
+    if @project.members.where(user: current_user).empty?
+      @member = Member.new
+      @member.project = @project
+      @member.approved = false
+      @member.owner = false
+      @member.user = current_user
+      @member.role = params[:role]
+      if @member.save
+        redirect_to project_url(@project.id)
+      end
+    else
+      flash[:notice] = "You are already on the list for membership."
+      redirect_to project_url(@project.id)
+    end
+  end
+
+  def update_applicant
+    @member = Member.find(params[:member_id])
+    @member.approved = params[:approved]
+    if @member.save
+      redirect_to project_url(params[:project_id])
+    end
   end
 
   private
