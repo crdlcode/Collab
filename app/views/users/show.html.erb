@@ -33,10 +33,17 @@
   <% if @projects_owned.empty? == false %>
     <div class="project-container">
       <h2><%= @user.first_name.capitalize %>'s Projects</h2>
-      <div class="owned-projects">
+      <div class="owned-container">
         <% @projects_owned.each do |project_id| %>
           <% @project = Project.find(project_id) %>
-          <div class="own-project">
+          <div class="project-item">
+            <div class="project-image">
+              <% if @project.image && @project.image != "" %>
+                <%= image_tag @project.image %>
+              <% else %>
+                  <%= image_tag "default.jpg" %>
+              <% end %>
+            </div>
             <h3><%= link_to @project.name, project_path(@project) %></h3>
             <% if @project.categories.empty? == false %>
               <p class="categories">
@@ -54,10 +61,17 @@
   <% if @projects_joined.empty? == false %>
     <div class="project-container">
       <h2><%= @user.first_name.capitalize %> Joined These Projects</h2>
-      <div class="joined-projects">
+      <div class="joined-container">
         <% @projects_joined.each do |project_id| %>
           <% @project = Project.find(project_id) %>
-          <div class="joined-project">
+          <div class="project-item">
+            <div class="project-image">
+              <% if @project.image && @project.image != "" %>
+                <%= image_tag @project.image %>
+              <% else %>
+                  <%= image_tag "default.jpg" %>
+              <% end %>
+            </div>
             <h3><%= link_to @project.name, project_path(@project) %></h3>
             <% if @project.categories.empty? == false %>
               <p class="categories">
@@ -75,10 +89,17 @@
   <% if @projects_applied.empty? == false %>
     <div class="project-container">
       <h2><%= @user.first_name.capitalize %> Applied to These Projects</h2>
-      <div class="applied-projects">
+      <div class="applied-container">
         <% @projects_applied.each do |project_id| %>
           <% @project = Project.find(project_id) %>
-          <div class="applied-project">
+          <div class="project-item">
+            <div class="project-image">
+              <% if @project.image && @project.image != "" %>
+                <%= image_tag @project.image %>
+              <% else %>
+                  <%= image_tag "default.jpg" %>
+              <% end %>
+            </div>
             <h3><%= link_to @project.name, project_path(@project) %></h3>
             <% if @project.categories.empty? == false %>
               <p class="categories">
