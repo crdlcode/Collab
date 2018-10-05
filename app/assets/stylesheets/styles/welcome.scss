@@ -199,7 +199,7 @@ html {
   font-weight: bold;
   font-size: 15px;
   border-radius: 20px;
-  padding: 20px 20px 20px 20px;
+  padding: 20px;
   text-transform: uppercase;
   margin: 10px;
   background-color: var(--engage);
@@ -210,4 +210,40 @@ html {
   width: 95px;
   padding: 2px;
   position: relative;
+}
+
+@media screen and (max-width: 500px) {
+  .landing-buttons {
+    display: block;
+    padding: 15px;
+    margin: 10px auto;
+  }
+
+  .hero-text h1 {
+    font-size: 1.4em;
+  }
+
+  .logo-landing {
+    width: 70px;
+  }
+
+  .hero-text p {
+    font-size: 1.2em;
+  }
+}
+
+@media screen and (max-width: 715px) {
+  .hero-text h1 {
+    font-size: 2em;
+  }
+
+  .logo-landing {
+    width: 85px;
+  }
+
+  .landing-buttons {
+    display: block;
+    padding: 15px;
+    margin: 10px auto;
+  }
 }
