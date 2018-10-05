@@ -191,3 +191,16 @@ img {
   -o-animation-duration: 1.5s;
   -o-animation-fill-mode: forwards;
 }
+
+@media screen and (max-width: 750px) {
+  .project-show-container {
+    grid-template-columns: auto;
+    grid-template-areas:
+      "projectInfo"
+      "visitorMsgs"
+      "privateMsgs"
+      "publicForm"
+      "privateForm"
+      "looking";
+  }
+}
